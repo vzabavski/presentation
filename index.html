@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<section><h1>Intro</h1></section>
+					<section>
+						<h2 class="r-fit-text">What is inheritance in JS?</h2>
+						<h2 class="fragment fade-in r-fit-text">Inheritance is a way to say, that those objects are similar to other, except for some details.</h2>
+					</section>
+					<section>
+						<pre><code data-trim data-noescape data-line-numbers="1-6|7,8|10|11|12,13">
+							const cat = {
+								name: 'Default cat',
+								greeting: function() {
+									console.log(`Hello, my name is ${this.name}!`)
+								}
+							};
+							const kitty = Object.create(cat);
+							kitty.name = 'Kitty'
+							
+							console.log(kitty.greeting()) // 'Hello, my name is Kitty!'
+							console.log(kitty.hasOwnProperty()) // false
+							console.log(kitty.__proto__)
+							// {name: 'Default cat',greeting: [Function:greeting]}
+						</code></pre>
+					</section>
+					<section>
+						<img src="./scheme.png" width=80% height=80%>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Classes in ES6</h2>
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+							class Person {
+								constructor(firstName, lastName) {
+								  this.firstName = firstName
+								  this.lastName = lastName
+								}
+								getFullName() {
+								  console.log(`${this.firstName} ${this.lastName}`)
+								}
+							}							  
+						</code></pre>
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+							let person = new Person('John', 'Doe')
+							person.getFullName() // "John Doe"				  
+						</code></pre>
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+							class User extends Person {
+								constructor(firstName, lastName, email, password) {
+								  super(firstName, lastName)
+								  this.email = email
+								  this.password = password
+								 }
+								 getEmail() {
+								   return this.email
+								 }
+								 getPassword() {
+								   return this.password
+								 }
+							}				  
+						</code></pre>
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+							function App() {
+								let user = 
+								new User('John', 'Doe', 'jhon@doe.com', 'qwerty');
+
+								user.getFullName() // "John Doe"
+								user.getEmail() // "john@doe.com"
+								user.getPassword() // "qwerty"
+								user.firstName // "John"
+								user.lastName // "Doe"
+								user.email // "john@doe.com"
+								user.password // "qwerty"
+							}		  
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section><h1>Classes vs Prototypes</h1></section>
+					<section>
+						<ul>
+							<h2>Dan Abramov says that:</h2>
+							<li class="fragment" data-fragment-index="1">Classes hide prototypal inheritance at the heart of JS</li>
+							<li class="fragment" data-fragment-index="2">Classes encourage the use of inheritance, but it is better to use composition</li>
+							<li class="fragment" data-fragment-index="3">Classes tend to keep you from changing the first bad project structure that comes to your mind</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section><h1>Composition</h1></section>
+					<section>
+						<pre><code data-trim data-noescape>
+							const Person = {
+								firstName: 'firstName',
+								lastName: 'lastName',
+								getFullName: function() {
+									return `${this.firstName} ${this.lastName}`
+								}
+							}										
+						</code></pre>
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+							let person = Object.create(Person)
+							person.getFullName() // "firstName lastName"
+							
+							person.firstName = 'John'
+							person.lastName = 'Doe'
+							
+							person.getFullName() // "John Doe"
+									
+						</code></pre>
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+							const User = Object.create(Person)
+							User.email = ''
+							User.password = ''
+							User.getEmail = function() {
+								return this.email
+							}	
+						</code></pre>
+					</section>				
+					<section>
+						<pre><code data-trim data-noescape>
+							let user = Object.create(User)
+							user.firstName = 'John'
+							user.lastName = 'Doe'
+							user.email = 'john@doe.com'
+							user.password = 'qwerty'	
+						</code></pre>
+					</section>
+				</section>
+				<section><h2>Thank you for attention!</h2></section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				progress: false,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight ]    
+			});
+		</script>
+	</body>
+</html>
