@@ -40,6 +40,7 @@
 						</code></pre>
 					</section>
 					<section>
+						<h3>Prototype chain</h3>
 						<img src="./scheme.png" width=80% height=80%>
 					</section>
 				</section>
@@ -84,7 +85,7 @@
 						</code></pre>
 					</section>
 					<section>
-						<pre><code data-trim data-noescape>
+						<pre><code data-trim data-noescape data-line-numbers="1-4|5-11">
 							function App() {
 								let user = 
 								new User('John', 'Doe', 'jhon@doe.com', 'qwerty');
@@ -147,8 +148,9 @@
 						</code></pre>
 					</section>				
 					<section>
-						<pre><code data-trim data-noescape>
+						<pre><code data-trim data-noescape data-line-numbers="1|2|3-6">
 							let user = Object.create(User)
+							user.getFullName() // 'firstName lastName'
 							user.firstName = 'John'
 							user.lastName = 'Doe'
 							user.email = 'john@doe.com'
